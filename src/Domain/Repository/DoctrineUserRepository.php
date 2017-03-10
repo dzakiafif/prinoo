@@ -9,10 +9,11 @@
 namespace Komal\prinoo\Domain\Repository;
 
 
+use Doctrine\ORM\EntityRepository;
 use Komal\prinoo\Domain\Contracts\Repository\UserRepositoryInterface;
 use Komal\prinoo\Domain\Entity\User;
 
-class DoctrineUserRepository implements UserRepositoryInterface
+class DoctrineUserRepository extends EntityRepository implements UserRepositoryInterface
 {
 
     /**
@@ -21,6 +22,7 @@ class DoctrineUserRepository implements UserRepositoryInterface
      */
     public function findById($id)
     {
+        return $this->find($id);
         // TODO: Implement findById() method.
     }
 
@@ -30,6 +32,7 @@ class DoctrineUserRepository implements UserRepositoryInterface
      */
     public function findByEmail($email)
     {
+        return $this->findOneBy(['email'=>$email]);
         // TODO: Implement findByEmail() method.
     }
 }

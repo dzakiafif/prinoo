@@ -41,6 +41,8 @@ class ClientController implements ControllerProviderInterface
 
         $controllers->match('/registration-client',[$this,'registrationClientAction']);
 
+        $controllers->match('/login',[$this,'loginAction']);
+
         return $controllers;
     }
 
@@ -75,5 +77,27 @@ class ClientController implements ControllerProviderInterface
 
         return 'OK';
 
+    }
+
+    public function loginAction(Request $request)
+    {
+        if($request->getMethod()=='POST'){
+            $email = $request->get('email');
+            $pass = md5($request->get('password'));
+            $data = $this->app['user.repository']->findByEmail($email);
+//            $userList = $this->app['user.repository']->findAll();
+
+            if($data != null){
+                if($pass == $data->getPassword()){
+                    return 'SUKSES';
+                }else{
+                    return 'GAGAL';
+                }
+            }else{
+                return 'EMAIL TIDAK COCOK';
+            }
+        }
+
+        return $this->app['twig']->render('login.twig');
     }
 }

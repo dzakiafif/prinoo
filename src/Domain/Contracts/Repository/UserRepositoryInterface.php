@@ -8,7 +8,7 @@
 
 namespace Komal\prinoo\Domain\Contracts\Repository;
 
-use Komal\Prinoo\Domain\Entity\User;
+use Komal\prinoo\Domain\Entity\User;
 
 interface UserRepositoryInterface
 {

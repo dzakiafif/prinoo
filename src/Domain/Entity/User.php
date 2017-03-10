@@ -7,7 +7,6 @@
  */
 
 namespace Komal\prinoo\Domain\Entity;
-use Pentagonal\PhPass\PasswordHash;
 
 /**
  * Class User
@@ -194,8 +193,8 @@ class User
      */
     public function setPassword($password)
     {
-        $hash = new PasswordHash();
-        $this->password = $hash->hash(md5($password));
+//        $hash = new PasswordHash();
+        $this->password = md5($password);
     }
 
     public function setPasswordNonHash($password)

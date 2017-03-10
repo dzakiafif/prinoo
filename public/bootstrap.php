@@ -70,3 +70,7 @@ if ($app['debug']) {
     Symfony\Component\Debug\Debug::enable(E_ALL, true);
     $app->register(new \Silex\Provider\WebProfilerServiceProvider(), $config['profiler']);
 }
+
+$app['user.repository'] = function () use ($app) {
+    return $app['orm.em']->getRepository(\Komal\prinoo\Domain\Entity\User::class);
+};
