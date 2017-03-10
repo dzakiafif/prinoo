@@ -1,0 +1,7 @@
+vendor/
+.idea/
+app/config.php
+app/cache/
+app/logs/
+app/proxies/
+cli-config.php

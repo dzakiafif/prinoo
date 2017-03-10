@@ -1,0 +1,44 @@
+{
+  "name": "komal/prinoo",
+  "description": "Printing Online System",
+  "require": {
+    "doctrine/collections": "^1.3",
+    "silex/silex": "^1.3",
+    "dflydev/doctrine-orm-service-provider": "1.0.7",
+    "twig/twig": "^1.23",
+    "monolog/monolog": "^1.17",
+    "swiftmailer/swiftmailer": "^5.4",
+    "symfony/validator": "^2.7",
+    "symfony/translation": "^2.7",
+    "silex/web-profiler": "^1.0",
+    "symfony/form": "^2.7",
+    "symfony/security": "^2.7",
+    "symfony/twig-bridge": "^2.7",
+    "symfony/security-csrf": "^2.7",
+    "symfony/assetic-bundle": "^2.8",
+    "symfony/dependency-injection": "~2.3",
+    "symfony/doctrine-bridge": "^3.0",
+    "symfony/property-info": "^3.0",
+    "symfony/intl": "~2.4",
+    "symfony/finder": "~2.4",
+    "pentagonal/phpass": "^1.1"
+  },
+  "require-dev": {
+    "symfony/debug": "^2.7",
+    "symfony/var-dumper": "^2.7",
+    "doctrine/data-fixtures": "^1.1"
+  },
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "komaltechno",
+      "email": "komaltechno@gmail.com"
+    }
+  ],
+  "autoload" : {
+    "psr-4" : {
+      "Komal\\prinoo\\": "src/"
+    }
+  },
+  "minimum-stability": "stable"
+}
