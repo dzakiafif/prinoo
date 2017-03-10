@@ -68,6 +68,12 @@ class User
     private $password;
 
     /**
+     * @Column(type="string",length=255,nullable=true)
+     * @var string
+     */
+    private $token;
+
+    /**
      * @Column(type="datetime",name="created_at",nullable=false)
      * @var \DateTime
      */
@@ -90,6 +96,7 @@ class User
         $user->setJenisKelamin($jenisKelamin);
         $user->setAlamat($alamat);
         $user->setPassword($password);
+        $user->setToken(sha1($email));
         $user->setCreatedAt(new \DateTime());
         $user->setUpdatedAt(new \DateTime());
 
@@ -232,6 +239,22 @@ class User
     public function setAlamat($alamat)
     {
         $this->alamat = $alamat;
+    }
+
+    /**
+     * @return string
+     */
+    public function getToken()
+    {
+        return $this->token;
+    }
+
+    /**
+     * @param string $token
+     */
+    public function setToken($token)
+    {
+        $this->token = $token;
     }
 
     /**

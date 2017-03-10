@@ -43,6 +43,8 @@ class ClientController implements ControllerProviderInterface
 
         $controllers->match('/login',[$this,'loginAction'])->bind('login');
 
+        $controllers->match('/reset-password',[$this,'resetPasswordAction']);
+
         return $controllers;
     }
 
@@ -99,5 +101,36 @@ class ClientController implements ControllerProviderInterface
         }
 
         return $this->app['twig']->render('login.twig');
+    }
+
+    public function resetPasswordAction(Request $request)
+    {
+        if($request->getMethod() == 'POST')
+        {
+            $user = $this->app['user.repository']->findByEmail($request->get('email'));
+
+            if($user != null){
+                $transport = \Swift_SmtpTransport::newInstance(
+                    'smtp.gmail.com',587,'tls')
+                    ->setUsername('dzakiafif12@gmail.com')
+                    ->setPassword('dzakiafif');
+
+                $message = \Swift_Message::newInstance();
+                $message->setSubject('Reset Password');
+                $message->setFrom(['noreply@prinoo.com']);
+                $message->setTo([$request->get('email')]);
+                $message->setBody(
+                    $this->app['twig']->render('reset-tmp.twig'),'text/html'
+                );
+
+                $mailer = \Swift_Mailer::newInstance($transport);
+                $mailer->send($message);
+
+                return 'OK';
+            }else{
+                return 'cek email apakah sudah benar apa tidak';
+            }
+        }
+        return $this->app['twig']->render('reset-password.twig');
     }
 }

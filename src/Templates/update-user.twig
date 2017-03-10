@@ -1,0 +1,35 @@
+<html>
+<head></head>
+<body>
+    <form action="" class="form-horizontal" method="post">
+        <div class="form-group">
+            <input type="email" name="email" class="form-control" placeholder="input email" value="{{ data.email }}">
+        </div>
+        <div class="form-group">
+            <input type="text" name="first-name" class="form-control" placeholder="input firstname" value="{{ data.firstName }}">
+        </div>
+        <div class="form-group">
+            <input type="text" name="last-name" class="form-control" placeholder="input lastname" value="{{ data.lastName }}">
+        </div>
+        <div class="form-group">
+            <input type="text" name="no-hp" class="form-control" placeholder="input nomer hp" value="{{ data.noHp }}">
+        </div>
+        <div class="form-group">
+            <select name="jenis-kelamin" class="form-control">
+                <option value="">-- Select Gender --</option>
+                {% if data.jenisKelamin == '0' %}<option value="0" selected>Laki-Laki</option>{% endif %}
+                {% if data.jenisKelamin == '1' %}<option value="1" selected>Perempuan</option>{% endif %}
+            </select>
+        </div>
+        <div class="form-group">
+            <input type="text" name="alamat" class="form-control" placeholder="input alamat" value="{{ data.alamat }}">
+        </div>
+        <div class="form-group">
+            <input type="password" name="password" class="form-control" placeholder="input password" value="{{ data.password }}">
+        </div>
+        <div class="form-group">
+            <input type="submit" value="EDIT">
+        </div>
+    </form>
+</body>
+</html>
