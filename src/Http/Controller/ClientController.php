@@ -39,9 +39,9 @@ class ClientController implements ControllerProviderInterface
 
         $controllers->get('/createRaw',[$this,'createRawAction']);
 
-        $controllers->match('/registration-client',[$this,'registrationClientAction']);
+        $controllers->match('/registration-client',[$this,'registrationClientAction'])->bind('registration');
 
-        $controllers->match('/login',[$this,'loginAction']);
+        $controllers->match('/login',[$this,'loginAction'])->bind('login');
 
         return $controllers;
     }
