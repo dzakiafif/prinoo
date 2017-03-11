@@ -59,6 +59,8 @@ class ClientController implements ControllerProviderInterface
 
         $controllers->get('/delete-order/{id}',[$this,'deleteOrderAction']);
 
+        $controllers->get('/list-barang',[$this,'listBarangAction']);
+
         return $controllers;
     }
 
@@ -229,6 +231,13 @@ class ClientController implements ControllerProviderInterface
         return 'order berhasil di delete';
     }
 
+    public function listBarangAction()
+    {
+        $dataInfo = $this->app['barang.repository']->findAll();
+        
+        return $this->app['twig']->render('list-barang.twig',['data'=>$dataInfo]);
+    }
+    
     public function logoutAction()
     {
         $this->app['session']->clear();
