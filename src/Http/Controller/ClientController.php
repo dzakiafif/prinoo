@@ -108,45 +108,7 @@ class ClientController implements ControllerProviderInterface
 
     public function loginAction(Request $request)
     {
-//        $login = new LoginForm();
-//        $formBuilder = $this->app['form.factory']->create($login,$login);
-//
-//        if($request->getMethod()=='GET')
-//        {
-//            return $this->app['twig']->render('login.twig',['form'=>$formBuilder->createView()]);
-//        }
-//
-//        $formBuilder->handleRequest($request);
-//
-//        $data = $this->app['user.repository']->findByemail($login->getEmail());
-//
-//        if($data == null){
-//            $this->app['session']->getFlashBag('
-//            message_error','email incorrect'
-//            );
-//            return $this->app['twig']->render('login.twig',['form'=>$formBuilder->createView()]);
-//        }
-//
-//        if(!(new UserPasswordMatcher($login->getPassword(),$data))->match())
-//        {
-//            $this->app['session']->getFlashbag(
-//                'message_error','email or password not match given'
-//            );
-//            return $this->app['twig']->render('login.twig',['form'=>$formBuilder->createView()]);
-//        }
-//
-////        $this->app['session']->set('role',['value'=>$data->getRole()]);
-////        $this->app['session']->set('email',['value'=>$data->getEmail()]);
-////        $role = $request->get('role');
-//
-//        if($request->getMethod() == 'POST'){
-//            if($data != null){
-//                if($login->getPassword() == $data->getPassword()){
-//                    return $this->app->redirect('/home');
-//
-//                }
-//            }
-//        }
+
         if($request->getMethod()=='POST'){
             $email = $request->get('email');
             $pass = md5($request->get('password'));
@@ -263,6 +225,8 @@ class ClientController implements ControllerProviderInterface
 
         $this->app['orm.em']->remove($order);
         $this->app['orm.em']->flush();
+
+        return 'order berhasil di delete';
     }
 
     public function logoutAction()
