@@ -55,6 +55,8 @@ class ClientController implements ControllerProviderInterface
 
         $controllers->match('/create-order',[$this,'createOrderAction']);
 
+        $controllers->get('/logout',[$this,'logoutAction']);
+
         return $controllers;
     }
 
@@ -202,6 +204,7 @@ class ClientController implements ControllerProviderInterface
         if($data != null){
             if($request->getMethod() == 'POST'){
                 $data->setPassword($request->get('password'));
+                $data->setToken('');
 
                 $this->app['orm.em']->flush();
 
@@ -222,8 +225,6 @@ class ClientController implements ControllerProviderInterface
         if($request->getMethod() == 'POST')
         {
             $namaProduk = $request->get('nama-produk');
-            $userId = $request->get('user-id');
-            $jenisProduk = $request->get('jenis-produk');
             $bahan = $request->get('bahan');
             $ukuranPanjang = $request->get('ukuran-panjang');
             $ukuranLebar = $request->get('ukuran-lebar');
@@ -234,10 +235,7 @@ class ClientController implements ControllerProviderInterface
 
             $filename = md5(uniqid()) . '.' . $orderProperty->guessExtension();
 
-            $data = Order::create($namaProduk,$userId,$jenisProduk,$bahan,$ukuranPanjang,$ukuranLebar,$jumlahBarang,$kualitas,$orderProperty,$jumlahHarga);
-
-            $this->app['orm.em']->persist($data);
-            $this->app['orm.em']->flush();
+            $data = Order::create($namaProduk,$this->app['session']->findByEmail($request->get('email')['value']),$this->app['barang.repository']->findById($request->get('barang')),$bahan,$ukuranPanjang,$ukuranLebar,$jumlahBarang,$kualitas,$orderProperty,$jumlahHarga);
 
             $dirName = $this->app['foto.path'] . '/order/' . $data->getId();
 
@@ -247,10 +245,21 @@ class ClientController implements ControllerProviderInterface
 
             $orderProperty->move($dirName,$filename. '.' . $orderProperty->guessExtension());
 
+            $this->app['orm.em']->persist($data);
+            $this->app['orm.em']->flush();
+
             return 'OK';
-
-
         }
+
+        return $this->app['twig']->render('order.twig');
+
+    }
+
+    public function logoutAction()
+    {
+        $this->app['session']->clear();
+
+        return 'berhasil logout';
     }
 
     public function homeClientAction()

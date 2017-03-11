@@ -182,7 +182,5 @@ class AdminController implements ControllerProviderInterface
 
             return 'data berhasil di update';
         }
-
-
     }
 }

@@ -79,4 +79,8 @@ $app['barang.repository'] = function () use ($app){
     return $app['orm.em']->getRepository(\Komal\prinoo\Domain\Entity\Barang::class);
 };
 
+$app['order.repository'] = function () use ($app){
+    return $app['orm.em']->getRepository(\Komal\prinoo\Domain\Entity\Order::class);
+};
+
 

@@ -46,12 +46,10 @@ class RegistrationForm extends AbstractType
      */
     private $alamat;
 
-    private $password;
-
     /**
      * @var string
      */
-    private $userProperty;
+    private $password;
 
     /**
      * @var \DateTime
@@ -127,18 +125,6 @@ class RegistrationForm extends AbstractType
                 'constraints' => new Assert\NotBlank(),
                 'label' => false,
                 'attr' => ['class'=>'form-control','placeholder'=>'input password','required'=>'required']
-            ]
-        )->add(
-            'userProperty',
-            'file',
-            [
-                'constraints' => [
-                    new Assert\NotBlank(),
-                    new Assert\Image([
-                        'maxSize' => '10m'
-                    ])
-                ],
-                'attr' => ['class'=>'form-control']
             ]
         )->add(
             'kirim',
@@ -266,23 +252,6 @@ class RegistrationForm extends AbstractType
     {
         $this->password = $password;
     }
-
-    /**
-     * @return mixed
-     */
-    public function getUserProperty()
-    {
-        return $this->userProperty;
-    }
-
-    /**
-     * @param mixed $userProperty
-     */
-    public function setUserProperty($userProperty)
-    {
-        $this->userProperty = $userProperty;
-    }
-
 
     /**
      * @return \DateTime
