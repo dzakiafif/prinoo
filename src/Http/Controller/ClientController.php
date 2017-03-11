@@ -57,6 +57,7 @@ class ClientController implements ControllerProviderInterface
             ->bind('reset_with_token');
 
         $controllers->get('/home', [$this, 'homeClientAction'])
+            ->before([$this, 'identityCheck'])
             ->bind('home');
 
         $controllers->match('/create-order', [$this, 'createOrderAction'])
@@ -75,6 +76,17 @@ class ClientController implements ControllerProviderInterface
             ->bind('create_dummy');
 
         return $controllers;
+    }
+
+    public function identityCheck()
+    {
+        $email = $this->app['session']->get('email')['value'];
+
+        if ($email == null) {
+            $this->app->redirect($this->app['url_generator']->generate('login'));
+        }
+
+        return null;
     }
 
     public function landingPageAction()
@@ -125,14 +137,18 @@ class ClientController implements ControllerProviderInterface
 
         $formBuilder->handleRequest($request);
 
+        if (!$formBuilder->isValid()) {
+            return $this->app['twig']->render('login.twig', ['form' => $formBuilder->createView()]);
+        }
+
         if ($request->getMethod() == 'POST') {
             $email = $loginForm->getEmail();
+
             $pass = md5($loginForm->getPassword());
             $data = $this->app['user.repository']->findByEmail($email);
 
             if ($data != null) {
                 if ($pass == $data->getPassword()) {
-
                     $this->app['session']->set('email', ['value' => $email]);
 
                     return $this->app->redirect('/home');
