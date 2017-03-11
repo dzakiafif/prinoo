@@ -44,6 +44,14 @@ class AdminController implements ControllerProviderInterface
             ->before([$this, 'userCredential'])
             ->bind('list_user');
 
+        $controllers->get('/list-order',[$this,'listOrderAction'])
+            ->before([$this,'userCredintial'])
+            ->bind('list_order');
+
+        $controllers->get('/list-barang',[$this,'listBarangAction'])
+            ->before([$this,'userCredintial'])
+            ->bind('list_barang');
+
         $controllers->get('/delete-user/{id}',[$this,'deleteUserAction'])
             ->before([$this, 'userCredential'])
             ->bind('delete_user');
@@ -80,18 +88,27 @@ class AdminController implements ControllerProviderInterface
 
     }
 
+    public function listOrderAction()
+    {
+        $orderInfo = $this->app['order.repository']->findAll();
+
+        return $this->app['twig']->render('list.order.twig',['data'=>$orderInfo]);
+    }
+
     public function listUserAction()
     {
         $dataUser = $this->app['user.repository']->findAll();
 
-        if($dataUser != null){
-            echo 'SUKSES';
-        }else {
-            echo 'GAGAL';
-        }
-
-        return $this->app['twig']->render('list-user.twig');
+        return $this->app['twig']->render('list-user.twig',['data'=>$dataUser]);
     }
+
+    public function listBarangAction()
+    {
+        $barangInfo = $this->app['barang.repository']->findAll();
+
+        return $this->app['twig']->render('list-barang.twig',['data'=>$barangInfo]);
+    }
+
     public function deleteUserAction(Request $request)
     {
         $user = $this->app['user.repository']->findById($request->get('id'));
@@ -99,7 +116,7 @@ class AdminController implements ControllerProviderInterface
         $this->app['orm.em']->remove($user);
         $this->app['orm.em']->flush();
 
-        return 'data berhasil dihapus';
+        return $this->app->redirect('/list-user');
     }
 
     public function editUserAction(Request $request)
@@ -127,7 +144,7 @@ class AdminController implements ControllerProviderInterface
 
             $this->app['orm.em']->flush();
             
-            return 'Data berhasil di Update';
+            return $this->app->redirect('/list-user');
         }
     }
 
@@ -159,7 +176,7 @@ class AdminController implements ControllerProviderInterface
         }
         $files->move($dirName, $fileName . '.' . $files->guessExtension());
 
-        return 'OK';
+        return $this->app->redirect('/list-barang');
     }
 
     public function deleteBarangAction(Request $request)
@@ -169,7 +186,7 @@ class AdminController implements ControllerProviderInterface
         $this->app['orm.em']->remove($barang);
         $this->app['orm.em']->flush();
 
-        return 'data berhasil di delete';
+        return $this->app->redirect('/list-barang');
     }
 
     public function editBarangAction(Request $request)
@@ -204,7 +221,7 @@ class AdminController implements ControllerProviderInterface
 
             $files->move($dirName,$fileName . '.' . $files->guessExtension());
 
-            return 'data berhasil di update';
+            return $this->app->redirect('/list-barang');
         }
     }
 }

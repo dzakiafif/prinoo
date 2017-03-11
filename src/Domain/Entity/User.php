@@ -45,7 +45,7 @@ class User
     private $lastName;
 
     /**
-     * @Column(type="string",name="no_hp",length=12,nullable=false)
+     * @Column(type="string",name="no_hp",length=255,nullable=false)
      * @var string  
      */
     private $noHp;

@@ -50,6 +50,9 @@ class ClientController implements ControllerProviderInterface
         $controllers->match('/login', [$this, 'loginAction'])
             ->bind('login');
 
+        $controllers->get('/list-order',[$this, 'listOrderAction'])
+            ->bind('list_order');
+
         $controllers->match('/reset-password', [$this, 'resetPasswordAction'])
             ->bind('reset_password');
 
@@ -126,7 +129,7 @@ class ClientController implements ControllerProviderInterface
         $this->app['orm.em']->persist($user);
         $this->app['orm.em']->flush();
 
-        return 'OK';
+        return $this->app->redirect('/home');
 
     }
 
@@ -193,6 +196,13 @@ class ClientController implements ControllerProviderInterface
         return $this->app['twig']->render('reset-password.twig');
     }
 
+    public function listOrderAction()
+    {
+        $orderInfo = $this->app['order.repository']->findByUserId($this->app['session']->get('email')['value']);
+
+        return $this->app['twig']->render('client/list.order.twig',['data'=>$orderInfo]);
+    }
+
     public function clientResetAction(Request $request)
     {
         $data = $this->app['user.repository']->findByToken($request->get('token'));
@@ -243,7 +253,7 @@ class ClientController implements ControllerProviderInterface
             $this->app['orm.em']->persist($data);
             $this->app['orm.em']->flush();
 
-            return 'OK';
+            return $this->app->redirect('/list-order');
         }
 
         return $this->app['twig']->render('order.twig');
@@ -257,7 +267,7 @@ class ClientController implements ControllerProviderInterface
         $this->app['orm.em']->remove($order);
         $this->app['orm.em']->flush();
 
-        return 'order berhasil di delete';
+        return $this->app->redirect('/list-order');
     }
 
     public function listBarangAction()
@@ -271,7 +281,7 @@ class ClientController implements ControllerProviderInterface
     {
         $this->app['session']->clear();
 
-        return 'berhasil logout';
+        return $this->app->redirect('/login');
     }
 
     public function homeClientAction()
