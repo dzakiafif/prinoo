@@ -1,0 +1,27 @@
+<html>
+<head></head>
+<body>
+    {{ form_start(form,{'method':'POST','action':'','enctype':'multipart/form-data','attr':{'class':'form-horizontal'}}) }}
+        <div class="form-group">
+            <div class="col-md-12">
+                {{ form_row(form.namaBarang) }}
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-12">
+                {{ form_row(form.description) }}
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-12">
+                {{ form_row(form.barangProperty) }}
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-12">
+                {{ form_row(form.kirim) }}
+            </div>
+        </div>
+    {{ form_end(form) }}
+</body>
+</html>

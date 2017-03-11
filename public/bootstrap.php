@@ -74,3 +74,9 @@ if ($app['debug']) {
 $app['user.repository'] = function () use ($app) {
     return $app['orm.em']->getRepository(\Komal\prinoo\Domain\Entity\User::class);
 };
+
+$app['barang.repository'] = function () use ($app){
+    return $app['orm.em']->getRepository(\Komal\prinoo\Domain\Entity\Barang::class);
+};
+
+

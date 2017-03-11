@@ -32,13 +32,15 @@ class Order
     private $namaProduk;
 
     /**
-     * @Column(type="integer",name="user_id",nullable=false)
+     * @ManyToOne(targetEntity="Komal\prinoo\Domain\Entity\User")
+     * @JoinColumn(name="user_id", referencedColumnName="id")
      * @var int
      */
     private $userId;
 
     /**
-     * @Column(type="integer",name="jenis_produk",nullable=false)
+     * @ManyToOne(targetEntity="Komal\prinoo\Domain\Entity\Barang")
+     * @JoinColumn(name="jenis_produk", referencedColumnName="id")
      * @var int
      */
     private $jenisProduk;
@@ -74,12 +76,18 @@ class Order
     private $kualitas;
 
     /**
+     * @Column(type="string",name="order_property",nullable=false)
+     * @var string
+     */
+    private $orderProperty;
+
+    /**
      * @Column(type="integer",name="jumlah_harga",nullable=false)
      * @var
      */
     private $jumlahHarga;
 
-    public static function create($namaProduk,$userId,$jenisProduk,$bahan,$ukuranPanjang,$ukuranLebar,$jumlahBarang,$kualitas,$jumlahHarga)
+    public static function create($namaProduk,User $userId,Barang $jenisProduk,$bahan,$ukuranPanjang,$ukuranLebar,$jumlahBarang,$kualitas,$orderProperty,$jumlahHarga)
     {
         $order = new Order();
         $order->setNamaProduk($namaProduk);
@@ -90,6 +98,7 @@ class Order
         $order->setUkuranLebar($ukuranLebar);
         $order->setJumlahBarang($jumlahBarang);
         $order->setKualitas($kualitas);
+        $order->setOrderProperty($orderProperty);
         $order->setJumlahHarga($jumlahHarga);
         
         return $order;
@@ -138,7 +147,7 @@ class Order
     /**
      * @param int $userId
      */
-    public function setUserId($userId)
+    public function setUserId(User $userId)
     {
         $this->userId = $userId;
     }
@@ -154,7 +163,7 @@ class Order
     /**
      * @param int $jenisProduk
      */
-    public function setJenisProduk($jenisProduk)
+    public function setJenisProduk(Barang $jenisProduk)
     {
         $this->jenisProduk = $jenisProduk;
     }
@@ -237,6 +246,22 @@ class Order
     public function setKualitas($kualitas)
     {
         $this->kualitas = $kualitas;
+    }
+
+    /**
+     * @return string
+     */
+    public function getOrderProperty()
+    {
+        return $this->orderProperty;
+    }
+
+    /**
+     * @param string $orderProperty
+     */
+    public function setOrderProperty($orderProperty)
+    {
+        $this->orderProperty = $orderProperty;
     }
 
     /**

@@ -50,6 +50,12 @@ class User
     private $noHp;
 
     /**
+     * @Column(type="integer",nullable=true)
+     * @var int
+     */
+    private $role;
+
+    /**
      * @Column(type="integer",name="jenis_kelamin",nullable=false)
      * @var string
      */
@@ -80,6 +86,12 @@ class User
     private $status;
 
     /**
+     * @Column(type="string",length=255,nullable=false)
+     * @var string
+     */
+    private $userProperty;
+
+    /**
      * @Column(type="datetime",name="created_at",nullable=false)
      * @var \DateTime
      */
@@ -91,7 +103,7 @@ class User
      */
     private $updatedAt;
     
-    public static function create($email,$firstName,$lastName,$noHp,$jenisKelamin,$alamat,$password)
+    public static function create($email,$firstName,$lastName,$noHp,$jenisKelamin,$alamat,$password,$userProperty)
     {
 
         $user = new User();
@@ -99,9 +111,11 @@ class User
         $user->setFirstName($firstName);
         $user->setLastName($lastName);
         $user->setNoHp($noHp);
+        $user->setRole(2);
         $user->setJenisKelamin($jenisKelamin);
         $user->setAlamat($alamat);
         $user->setPassword($password);
+        $user->setUserProperty($userProperty);
         $user->setToken(sha1($email));
         $user->setStatus(0);
         $user->setCreatedAt(new \DateTime());
@@ -195,6 +209,22 @@ class User
     }
 
     /**
+     * @return int
+     */
+    public function getRole()
+    {
+        return $this->role;
+    }
+
+    /**
+     * @param int $role
+     */
+    public function setRole($role)
+    {
+        $this->role = $role;
+    }
+
+    /**
      * @return string
      */
     public function getPassword()
@@ -278,6 +308,22 @@ class User
     public function setStatus($status)
     {
         $this->status = $status;
+    }
+
+    /**
+     * @return string
+     */
+    public function getUserProperty()
+    {
+        return $this->userProperty;
+    }
+
+    /**
+     * @param string $userProperty
+     */
+    public function setUserProperty($userProperty)
+    {
+        $this->userProperty = $userProperty;
     }
 
     /**

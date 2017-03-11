@@ -3,51 +3,98 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" type="text/css">
 </head>
 <body>
-    <form method="post" action="" class="form-horizontal" role="form">
-        <div class="form-group">
-            <div class="col-md-12">
-                <input type="email" name="email" class="form-control" placeholder="input email">
-            </div>
+{{ form_start(form, {'method': 'POST', 'action': '','attr': {'class': 'form-horizontal'}}) }}
+    <div class="form-group">
+        <div class="col-md-12">
+            {{ form_row(form.email) }}
         </div>
-        <div class="form-group">
-            <div class="col-md-12">
-                <input type="text" name="first-name" class="form-control" placeholder="input firstname">
-            </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-12">
+            {{ form_row(form.firstName) }}
         </div>
-        <div class="form-group">
-            <div class="col-md-12">
-                <input type="text" name="last-name" class="form-control" placeholder="input lastname">
-            </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-12">
+            {{ form_row(form.lastName) }}
         </div>
-        <div class="form-group">
-            <div class="col-md-12">
-                <input type="text" name="no-hp" class="form-control" placeholder="input no.hp">
-            </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-12">
+            {{ form_row(form.noHp) }}
         </div>
-        <div class="form-group">
-            <div class="col-md-12">
-                <select name="jenis-kelamin" class="form-control">
-                    <option value="">-- please choose gender --</option>
-                    <option value="0">Laki-laki</option>
-                    <option value="1">perempuan</option>
-                </select>
+    </div>
+    <div class="form-group">
+        <div class="col-md-12">
+            {{ form_row(form.jenisKelamin) }}
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-12">
+            {{ form_row(form.alamat) }}
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-12">
+            {{ form_row(form.password) }}
+        </div>
+    </div>
+    <div class="from-group">
+        <div class="col-md-12">
+            {{ form_row(form.userProperty) }}
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-12">
+            {{ form_row(form.kirim) }}
+        </div>
+    </div>
+{{ form_end(form) }}
+    {#<form method="post" action="" class="form-horizontal" role="form">#}
+        {#<div class="form-group">#}
+            {#<div class="col-md-12">#}
+                {#<input type="email" name="email" class="form-control" placeholder="input email">#}
+            {#</div>#}
+        {#</div>#}
+        {#<div class="form-group">#}
+            {#<div class="col-md-12">#}
+                {#<input type="text" name="first-name" class="form-control" placeholder="input firstname">#}
+            {#</div>#}
+        {#</div>#}
+        {#<div class="form-group">#}
+            {#<div class="col-md-12">#}
+                {#<input type="text" name="last-name" class="form-control" placeholder="input lastname">#}
+            {#</div>#}
+        {#</div>#}
+        {#<div class="form-group">#}
+            {#<div class="col-md-12">#}
+                {#<input type="text" name="no-hp" class="form-control" placeholder="input no.hp">#}
+            {#</div>#}
+        {#</div>#}
+        {#<div class="form-group">#}
+            {#<div class="col-md-12">#}
+                {#<select name="jenis-kelamin" class="form-control">#}
+                    {#<option value="">-- please choose gender --</option>#}
+                    {#<option value="0">Laki-laki</option>#}
+                    {#<option value="1">perempuan</option>#}
+                {#</select>#}
                 {#<input type="" name="jenis-kelamin" class="form-control" placeholder="input jenis kelamin">#}
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="col-md-12">
-                <input type="text" name="alamat" class="form-control" placeholder="input alamat">
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="col-md-12">
-                <input type="password" name="password" class="form-control" placeholder="input password">
-            </div>
-        </div>
-        <div class="form-group">
-            <input type="submit" value="CREATE">
-        </div>
-    </form>
+            {#</div>#}
+        {#</div>#}
+        {#<div class="form-group">#}
+            {#<div class="col-md-12">#}
+                {#<input type="text" name="alamat" class="form-control" placeholder="input alamat">#}
+            {#</div>#}
+        {#</div>#}
+        {#<div class="form-group">#}
+            {#<div class="col-md-12">#}
+                {#<input type="password" name="password" class="form-control" placeholder="input password">#}
+            {#</div>#}
+        {#</div>#}
+        {#<div class="form-group">#}
+            {#<input type="submit" value="CREATE">#}
+        {#</div>#}
+    {#</form>#}
 </body>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </html>

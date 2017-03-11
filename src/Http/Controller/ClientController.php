@@ -10,6 +10,9 @@ namespace Komal\prinoo\Http\Controller;
 
 
 use Komal\prinoo\Domain\Entity\User;
+use Komal\prinoo\Domain\Services\UserPasswordMatcher;
+use Komal\prinoo\Http\Form\LoginForm;
+use Komal\prinoo\Http\Form\RegistrationForm;
 use Silex\Application;
 use Silex\ControllerCollection;
 use Silex\ControllerProviderInterface;
@@ -64,22 +67,37 @@ class ClientController implements ControllerProviderInterface
 
     public function registrationClientAction(Request $request)
     {
-        $email = $request->get('email');
-        $firstName = $request->get('first-name');
-        $lastName = $request->get('last-name');
-        $noHp = $request->get('no-hp');
-        $jenisKelamin = $request->get('jenis-kelamin');
-        $alamat = $request->get('alamat');
-        $password = $request->get('password');
+        $registration = new RegistrationForm();
+        $formBuilder = $this->app['form.factory']->create($registration,$registration);
 
         if($request->getMethod() == 'GET'){
-            return $this->app['twig']->render('register.twig');
+            return $this->app['twig']->render('register.twig',['form'=>$formBuilder->createView()]);
         }
 
-        $info = User::create($email,$firstName,$lastName,$noHp,$jenisKelamin,$alamat,$password);
+        $formBuilder->handleRequest($request);
 
-        $this->app['orm.em']->persist($info);
+        if(!$formBuilder->isValid()){
+            return $this->app['twig']->render('register.twig',['form'=>$formBuilder->createView()]);
+        }
+        
+        $files = $registration->getUserProperty();
+        $fileName = md5(uniqid()). '.' . $files->guessExtension();
+
+        $user = User::create($registration->getEmail(),$registration->getFirstName(),$registration->getLastName(),$registration->getNoHp(),$registration->getJenisKelamin(),$registration->getAlamat(),$registration->getPassword(),$fileName);
+
+        $this->app['orm.em']->persist($user);
         $this->app['orm.em']->flush();
+
+        $dirName = $this->app['foto.path'] . '/user/' . $user->getId();
+
+        if(is_dir($dirName) == false){
+            mkdir($dirName,0755);
+        }
+        $files->move($dirName, $fileName . '.' . $files->guessExtension());
+
+//        var_dump($user);
+//        exit;
+
 
         return 'OK';
 
@@ -87,6 +105,45 @@ class ClientController implements ControllerProviderInterface
 
     public function loginAction(Request $request)
     {
+//        $login = new LoginForm();
+//        $formBuilder = $this->app['form.factory']->create($login,$login);
+//
+//        if($request->getMethod()=='GET')
+//        {
+//            return $this->app['twig']->render('login.twig',['form'=>$formBuilder->createView()]);
+//        }
+//
+//        $formBuilder->handleRequest($request);
+//
+//        $data = $this->app['user.repository']->findByemail($login->getEmail());
+//
+//        if($data == null){
+//            $this->app['session']->getFlashBag('
+//            message_error','email incorrect'
+//            );
+//            return $this->app['twig']->render('login.twig',['form'=>$formBuilder->createView()]);
+//        }
+//
+//        if(!(new UserPasswordMatcher($login->getPassword(),$data))->match())
+//        {
+//            $this->app['session']->getFlashbag(
+//                'message_error','email or password not match given'
+//            );
+//            return $this->app['twig']->render('login.twig',['form'=>$formBuilder->createView()]);
+//        }
+//
+////        $this->app['session']->set('role',['value'=>$data->getRole()]);
+////        $this->app['session']->set('email',['value'=>$data->getEmail()]);
+////        $role = $request->get('role');
+//
+//        if($request->getMethod() == 'POST'){
+//            if($data != null){
+//                if($login->getPassword() == $data->getPassword()){
+//                    return $this->app->redirect('/home');
+//
+//                }
+//            }
+//        }
         if($request->getMethod()=='POST'){
             $email = $request->get('email');
             $pass = md5($request->get('password'));
@@ -95,11 +152,11 @@ class ClientController implements ControllerProviderInterface
             if($data != null){
                 if($pass == $data->getPassword()){
                     return $this->app->redirect('/home');
+//                    return 'ok';
                 }else{
+//                    return 'gagal';
                     return $this->app->redirect('/login');
                 }
-            }else{
-                return 'EMAIL TIDAK COCOK';
             }
         }
 
@@ -159,6 +216,24 @@ class ClientController implements ControllerProviderInterface
 
         return $this->app['twig']->render('new-password.twig');
 
+    }
+
+    public function createOrderAction(Request $request)
+    {
+        if($request->getMethod() == 'POST')
+        {
+            $namaProduk = $request->get('nama-produk');
+            $userId = $request->get('user-id');
+            $jenisProduk = $request->get('jenis-produk');
+            $bahan = $request->get('bahan');
+            $ukuranPanjang = $request->get('ukuran-panjang');
+            $ukuranLebar = $request->get('ukuran-lebar');
+            $jumlahBarang = $request->get('jumlah-barang');
+            $kualitas = $request->get('kualitas');
+            $orderProperty = $request->files->get('order-property');
+
+
+        }
     }
 
     public function homeClientAction()
