@@ -57,6 +57,8 @@ class ClientController implements ControllerProviderInterface
 
         $controllers->get('/logout',[$this,'logoutAction']);
 
+        $controllers->get('/delete-order/{id}',[$this,'deleteOrderAction']);
+
         return $controllers;
     }
 
@@ -253,6 +255,14 @@ class ClientController implements ControllerProviderInterface
 
         return $this->app['twig']->render('order.twig');
 
+    }
+
+    public function deleteOrderAction(Request $request)
+    {
+        $order = $this->app['order.repository']->findById($request->get('id'));
+
+        $this->app['orm.em']->remove($order);
+        $this->app['orm.em']->flush();
     }
 
     public function logoutAction()
