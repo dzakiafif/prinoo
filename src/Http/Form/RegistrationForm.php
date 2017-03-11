@@ -69,7 +69,7 @@ class RegistrationForm extends AbstractType
             [
                 'constraints' => new Assert\NotBlank(),
                 'label' => false,
-                'attr' => ['class'=>'form-control','placeholder'=>'input email','required'=>'required']
+                'attr' => ['class'=>'form-control','required'=>'required']
             ]
         )->add(
             'firstName',
@@ -77,7 +77,7 @@ class RegistrationForm extends AbstractType
             [
                 'constraints' => new Assert\NotBlank(),
                 'label' => false,
-                'attr' => ['class'=>'form-control','placeholder'=>'input first name','required'=>'required']
+                'attr' => ['class'=>'form-control','required'=>'required']
             ]
         )->add(
             'lastName',
@@ -85,7 +85,7 @@ class RegistrationForm extends AbstractType
             [
                 'constraints' => new Assert\NotBlank(),
                 'label'=> false,
-                'attr' => ['class'=>'form-control','placeholder'=>'input last name','required'=>'required']
+                'attr' => ['class'=>'form-control','required'=>'required']
             ]
         )->add(
             'noHp',
@@ -93,7 +93,7 @@ class RegistrationForm extends AbstractType
             [
                 'constraints' => new Assert\NotBlank(),
                 'label' => false,
-                'attr' => ['class'=>'form-control','placeholder'=>'input no hp','required'=>'required']
+                'attr' => ['class'=>'form-control','required'=>'required']
             ]
         )->add(
             'jenisKelamin',
@@ -103,7 +103,6 @@ class RegistrationForm extends AbstractType
                 'choice_list' => new ChoiceList(
                     ['0','1'],['laki-laki','perempuan']
                 ),
-                'placeholder' => 'choose gender',
                 'empty_data' => 0,
                 'label' => false,
                 'attr' => [
@@ -116,7 +115,7 @@ class RegistrationForm extends AbstractType
             [
                 'constraints' => new Assert\NotBlank(),
                 'label' => false,
-                'attr' => ['class'=>'form-control','placeholder'=>'input alamat','required'=>'required']
+                'attr' => ['class'=>'form-control','required'=>'required']
             ]
         )->add(
             'password',
@@ -124,7 +123,7 @@ class RegistrationForm extends AbstractType
             [
                 'constraints' => new Assert\NotBlank(),
                 'label' => false,
-                'attr' => ['class'=>'form-control','placeholder'=>'input password','required'=>'required']
+                'attr' => ['class'=>'form-control','required'=>'required']
             ]
         )->add(
             'kirim',

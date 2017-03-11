@@ -40,22 +40,31 @@ class AdminController implements ControllerProviderInterface
     {
         $controllers = $app['controllers_factory'];
 
-        $controllers->get('/list-user',[$this,'listUserAction']);
+        $controllers->get('/list-user',[$this,'listUserAction'])
+            ->before([$this, 'userCredential'])
+            ->bind('list_user');
 
-        $controllers->get('/delete-user/{id}',[$this,'deleteUserAction']);
+        $controllers->get('/delete-user/{id}',[$this,'deleteUserAction'])
+            ->before([$this, 'userCredential'])
+            ->bind('delete_user');
 
-        $controllers->match('/update-user/{id}',[$this,'editUserAction']);
+        $controllers->match('/update-user/{id}',[$this,'editUserAction'])
+            ->before([$this, 'userCredential'])
+            ->bind('update_user');
 
-        $controllers->match('/create-barang',[$this,'createBarangAction']);
+        $controllers->match('/create-barang',[$this,'createBarangAction'])
+            ->before([$this, 'userCredential'])
+            ->bind('create_barang');
 
-        $controllers->get('/delete-barang/{id}',[$this,'deleteBarangAction']);
+        $controllers->get('/delete-barang/{id}',[$this,'deleteBarangAction'])
+            ->before([$this, 'userCredential'])
+            ->bind('delete_barang');
 
-        $controllers->match('/update-barang/{id}',[$this,'editBarangAction']);
-
-        $controllers->get('/credent', [$this, 'userCredential']);
+        $controllers->match('/update-barang/{id}',[$this,'editBarangAction'])
+            ->before([$this, 'userCredential'])
+            ->bind('update_barang');
 
         return $controllers;
-        // TODO: Implement connect() method.
     }
 
     public function userCredential()
@@ -63,7 +72,11 @@ class AdminController implements ControllerProviderInterface
         $email = $this->app['session']->get('email')['value'];
         $data = $this->app['user.repository']->findByEmail($email);
 
-        return var_dump($data->getRole());
+        if ($data->getRole() != 0) {
+            return $this->app->redirect($this->app['url_generator']->generate('home'));
+        }
+
+        return null;
 
     }
 

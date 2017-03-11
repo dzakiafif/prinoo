@@ -38,7 +38,7 @@ class LoginForm extends AbstractType
             [
                 'constraints' => new Assert\NotBlank(),
                 'label' => false,
-                'attr' => ['class'=>'form-control','placeholder'=>'input email','required'=>'required']
+                'attr' => ['class'=>'form-control','required'=>'required']
             ]
         )->add(
             'password',
@@ -46,14 +46,14 @@ class LoginForm extends AbstractType
             [
                 'constraints' => new Assert\NotBlank(),
                 'label' => false,
-                'attr' => ['class'=>'form-control','placeholder'=>'input password','required'=>'required']
+                'attr' => ['class'=>'form-control','required'=>'required']
             ]
         )->add(
             'kirim',
             'submit',
             [
-                'attr' => ['class'=>'btn btn-primary btn-block'],
-                'label' => 'sign in'
+                'attr' => ['class'=>'btn btn-yellow form-control'],
+                'label' => 'Masuk'
             ]
         );
     }

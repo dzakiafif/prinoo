@@ -16,6 +16,8 @@ $app = new \Silex\Application($config['common']);
 
 require 'bootstrap.php';
 
+$app['asset_path'] = '';
+
 $app->mount('/', new \Komal\prinoo\Http\Controller\ClientController($app));
 $app->mount('/admin', new \Komal\prinoo\Http\Controller\AdminController($app));
 //$app->mount('/admin/user', new \Jimmy\fifo\Http\Controller\UserController($app));
