@@ -89,7 +89,7 @@ class RegistrationForm extends AbstractType
             ]
         )->add(
             'noHp',
-            'integer',
+            'text',
             [
                 'constraints' => new Assert\NotBlank(),
                 'label' => false,

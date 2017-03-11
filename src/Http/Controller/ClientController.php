@@ -61,7 +61,22 @@ class ClientController implements ControllerProviderInterface
 
         $controllers->get('/list-barang',[$this,'listBarangAction']);
 
+        $controllers->get('/createDummy', [$this, 'createDummyAction'])
+            ->bind('create_dummy');
+
         return $controllers;
+    }
+
+    public function createDummyAction()
+    {
+        for ($i=0; $i < 10; $i++) {
+            $data = User::createDummy();
+
+            $this->app['orm.em']->persist($data);
+            $this->app['orm.em']->flush();
+        }
+
+        return 'Mari';
     }
 
     public function createRawAction()

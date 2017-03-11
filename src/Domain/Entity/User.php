@@ -7,6 +7,7 @@
  */
 
 namespace Komal\prinoo\Domain\Entity;
+use Faker\Factory;
 
 /**
  * Class User
@@ -122,6 +123,29 @@ class User
 
         return $user;
         
+    }
+
+    public static function createDummy()
+    {
+        $data = new User();
+
+        $faker = Factory::create();
+        $email = $faker->email;
+
+        $data->setEmail($email);
+        $data->setFirstName($faker->firstName);
+        $data->setLastName($faker->lastName);
+        $data->setNoHp($faker->phoneNumber);
+        $data->setRole(2);
+        $data->setJenisKelamin(0);
+        $data->setAlamat($faker->address);
+        $data->setPassword($faker->password);
+        $data->setToken(sha1($email));
+        $data->setStatus(0);
+        $data->setCreatedAt(new \DateTime());
+        $data->setUpdatedAt(new \DateTime());
+
+        return $data;
     }
 
     /**

@@ -44,63 +44,64 @@
         <div class="form-wrapper">
             <h2>Pendaftaran</h2>
             <p>&nbsp;</p>
-                {{ form_start(form,{'method':'POST','action':'','attr':{'class':'form-horizontal'}}) }}
-                <div class="form-group">
-                    <label for="email">E-mail</label>
-                    {{ form_row(form.email) }}
-                </div>
-                <div class="row">
-                    <div class="col">
-                        <div class="form-group">
-                            <label for="first-name">Nama Depan</label>
-                            {{ form_row(form.firstName) }}
-                            {#<input type="text" name="first-name" id="first-name" class="form-control" required>#}
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="form-group">
-                            <label for="last-name">Nama Belakang</label>
-                            {{ form_row(form.lastName) }}
-                            {#<input type="text" name="last-name" id="last-name" class="form-control" required>#}
-                        </div>
+            {{ form_start(form,{'method':'POST','action':'','attr':{'class':'form-horizontal'}}) }}
+            <div class="form-group">
+                <label for="email">E-mail</label>
+                {{ form_row(form.email) }}
+            </div>
+            <div class="row">
+                <div class="col">
+                    <div class="form-group">
+                        <label for="first-name">Nama Depan</label>
+                        {{ form_row(form.firstName) }}
+                        {#<input type="text" name="first-name" id="first-name" class="form-control" required>#}
                     </div>
                 </div>
-                <div class="form-group">
-                    <label for="no-telp">No. Telepon</label>
-                    {{ form_row(form.noHp) }}
-                    {#<input type="text" name="no-telp" id="no-telp" class="form-control" required>#}
+                <div class="col">
+                    <div class="form-group">
+                        <label for="last-name">Nama Belakang</label>
+                        {{ form_row(form.lastName) }}
+                        {#<input type="text" name="last-name" id="last-name" class="form-control" required>#}
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label for="jenis-kelamin">Jenis Kelamin</label>
-                    {{ form_row(form.jenisKelamin) }}
-                    {#<select name="jenis-kelamin" class="form-control" required>#}
-                        {#<option value="laki">Laki-laki</option>#}
-                        {#<option value="perempuan">Perempuan</option>#}
-                    {#</select>#}
-                </div>
-                <div class="form-group">
-                    <label for="alamat">Alamat</label>
-                    {{ form_row(form.alamat) }}
-                    {#<textarea name="alamat" id="alamat" class="form-control" required></textarea>#}
-                </div>
-                <div class="form-group">
-                    <label for="password">Kata sandi</label>
-                    {{ form_row(form.password) }}
-                    {#<input type="password" name="password" id="password" class="form-control" required>#}
-                </div>
-                {#<div class="form-group">#}
-                    {#<label for="repeat-password">Ulangi kata sandi</label>#}
-                    {#<input type="password" name="repeat-password" id="repeat-password" class="form-control" required>#}
-                {#</div>#}
-                <div class="form-check">
-                    <label class="form-check-label">
-                        <input type="checkbox" class="form-check-input" required>
-                        Saya setuju dengan <a href="#" title="Kebijakan">Kebijakan dan Ketentuan</a> yang telah ditetapkan oleh pihak penyedia layanan.
-                    </label>
-                </div>
-                <div class="form-group">
-                    <input type="submit" value="Daftar" class="form-control btn btn-yellow">
-                </div>
+            </div>
+            <div class="form-group">
+                <label for="no-telp">No. Telepon</label>
+                {{ form_row(form.noHp) }}
+                {#<input type="text" name="no-telp" id="no-telp" class="form-control" required>#}
+            </div>
+            <div class="form-group">
+                <label for="jenis-kelamin">Jenis Kelamin</label>
+                {{ form_row(form.jenisKelamin) }}
+                {#<select name="jenis-kelamin" class="form-control" required>#}
+                {#<option value="laki">Laki-laki</option>#}
+                {#<option value="perempuan">Perempuan</option>#}
+                {#</select>#}
+            </div>
+            <div class="form-group">
+                <label for="alamat">Alamat</label>
+                {{ form_row(form.alamat) }}
+                {#<textarea name="alamat" id="alamat" class="form-control" required></textarea>#}
+            </div>
+            <div class="form-group">
+                <label for="password">Kata sandi</label>
+                {{ form_row(form.password) }}
+                {#<input type="password" name="password" id="password" class="form-control" required>#}
+            </div>
+            {#<div class="form-group">#}
+            {#<label for="repeat-password">Ulangi kata sandi</label>#}
+            {#<input type="password" name="repeat-password" id="repeat-password" class="form-control" required>#}
+            {#</div>#}
+            {{ form_row(form._token) }}
+            <div class="form-check">
+                <label class="form-check-label">
+                    <input type="checkbox" class="form-check-input" required>
+                    Saya setuju dengan <a href="#" title="Kebijakan">Kebijakan dan Ketentuan</a> yang telah ditetapkan oleh pihak penyedia layanan.
+                </label>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Daftar" class="form-control btn btn-yellow">
+            </div>
         </div>
     </div>
 </section>
@@ -108,104 +109,4 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"></script>
 </body>
-</html>
-{#<html>#}
-{#<head>#}
-    {#<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" type="text/css">#}
-{#</head>#}
-{#<body>#}
-{#{{ form_start(form, {'method': 'POST', 'action': '','attr': {'class': 'form-horizontal'}}) }}#}
-    {#<div class="form-group">#}
-        {#<div class="col-md-12">#}
-            {#{{ form_row(form.email) }}#}
-        {#</div>#}
-    {#</div>#}
-    {#<div class="form-group">#}
-        {#<div class="col-md-12">#}
-            {#{{ form_row(form.firstName) }}#}
-        {#</div>#}
-    {#</div>#}
-    {#<div class="form-group">#}
-        {#<div class="col-md-12">#}
-            {#{{ form_row(form.lastName) }}#}
-        {#</div>#}
-    {#</div>#}
-    {#<div class="form-group">#}
-        {#<div class="col-md-12">#}
-            {#{{ form_row(form.noHp) }}#}
-        {#</div>#}
-    {#</div>#}
-    {#<div class="form-group">#}
-        {#<div class="col-md-12">#}
-            {#{{ form_row(form.jenisKelamin) }}#}
-        {#</div>#}
-    {#</div>#}
-    {#<div class="form-group">#}
-        {#<div class="col-md-12">#}
-            {#{{ form_row(form.alamat) }}#}
-        {#</div>#}
-    {#</div>#}
-    {#<div class="form-group">#}
-        {#<div class="col-md-12">#}
-            {#{{ form_row(form.password) }}#}
-        {#</div>#}
-    {#</div>#}
-    {#<div class="from-group">#}
-        {#<div class="col-md-12">#}
-            {#{{ form_row(form.userProperty) }}#}
-        {#</div>#}
-    {#</div>#}
-    {#<div class="form-group">#}
-        {#<div class="col-md-12">#}
-            {#{{ form_row(form.kirim) }}#}
-        {#</div>#}
-    {#</div>#}
-{#{{ form_end(form) }}#}
-    {#<form method="post" action="" class="form-horizontal" role="form">#}
-        {#<div class="form-group">#}
-            {#<div class="col-md-12">#}
-                {#<input type="email" name="email" class="form-control" placeholder="input email">#}
-            {#</div>#}
-        {#</div>#}
-        {#<div class="form-group">#}
-            {#<div class="col-md-12">#}
-                {#<input type="text" name="first-name" class="form-control" placeholder="input firstname">#}
-            {#</div>#}
-        {#</div>#}
-        {#<div class="form-group">#}
-            {#<div class="col-md-12">#}
-                {#<input type="text" name="last-name" class="form-control" placeholder="input lastname">#}
-            {#</div>#}
-        {#</div>#}
-        {#<div class="form-group">#}
-            {#<div class="col-md-12">#}
-                {#<input type="text" name="no-hp" class="form-control" placeholder="input no.hp">#}
-            {#</div>#}
-        {#</div>#}
-        {#<div class="form-group">#}
-            {#<div class="col-md-12">#}
-                {#<select name="jenis-kelamin" class="form-control">#}
-                    {#<option value="">-- please choose gender --</option>#}
-                    {#<option value="0">Laki-laki</option>#}
-                    {#<option value="1">perempuan</option>#}
-                {#</select>#}
-                {#<input type="" name="jenis-kelamin" class="form-control" placeholder="input jenis kelamin">#}
-            {#</div>#}
-        {#</div>#}
-        {#<div class="form-group">#}
-            {#<div class="col-md-12">#}
-                {#<input type="text" name="alamat" class="form-control" placeholder="input alamat">#}
-            {#</div>#}
-        {#</div>#}
-        {#<div class="form-group">#}
-            {#<div class="col-md-12">#}
-                {#<input type="password" name="password" class="form-control" placeholder="input password">#}
-            {#</div>#}
-        {#</div>#}
-        {#<div class="form-group">#}
-            {#<input type="submit" value="CREATE">#}
-        {#</div>#}
-    {#</form>#}
-{#</body>#}
-{#<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>#}
-{#</html>#}
+</html>	

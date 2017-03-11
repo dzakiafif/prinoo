@@ -52,8 +52,19 @@ class AdminController implements ControllerProviderInterface
 
         $controllers->match('/update-barang/{id}',[$this,'editBarangAction']);
 
+        $controllers->get('/credent', [$this, 'userCredential']);
+
         return $controllers;
         // TODO: Implement connect() method.
+    }
+
+    public function userCredential()
+    {
+        $email = $this->app['session']->get('email')['value'];
+        $data = $this->app['user.repository']->findByEmail($email);
+
+        return var_dump($data->getRole());
+
     }
 
     public function listUserAction()
