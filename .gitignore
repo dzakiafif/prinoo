@@ -1,5 +1,6 @@
 vendor/
 .idea/
+public/photo/
 app/config.php
 app/cache/
 app/logs/
