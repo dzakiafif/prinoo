@@ -45,6 +45,10 @@ class ClientController implements ControllerProviderInterface
 
         $controllers->match('/reset-password',[$this,'resetPasswordAction']);
 
+        $controllers->match('/reset/{token}',[$this,'clientResetAction']);
+
+        $controllers->get('/home',[$this,'homeClientAction'])->bind('home');
+
         return $controllers;
     }
 
@@ -87,13 +91,12 @@ class ClientController implements ControllerProviderInterface
             $email = $request->get('email');
             $pass = md5($request->get('password'));
             $data = $this->app['user.repository']->findByEmail($email);
-//            $userList = $this->app['user.repository']->findAll();
 
             if($data != null){
                 if($pass == $data->getPassword()){
-                    return 'SUKSES';
+                    return $this->app->redirect('/home');
                 }else{
-                    return 'GAGAL';
+                    return $this->app->redirect('/login');
                 }
             }else{
                 return 'EMAIL TIDAK COCOK';
@@ -109,6 +112,8 @@ class ClientController implements ControllerProviderInterface
         {
             $user = $this->app['user.repository']->findByEmail($request->get('email'));
 
+            $token = $user->getToken();
+
             if($user != null){
                 $transport = \Swift_SmtpTransport::newInstance(
                     'smtp.gmail.com',587,'tls')
@@ -120,7 +125,7 @@ class ClientController implements ControllerProviderInterface
                 $message->setFrom(['noreply@prinoo.com']);
                 $message->setTo([$request->get('email')]);
                 $message->setBody(
-                    $this->app['twig']->render('reset-tmp.twig'),'text/html'
+                    $this->app['twig']->render('reset-tmp.twig',['token'=>$token,'host'=>$request->getHost()]),'text/html'
                 );
 
                 $mailer = \Swift_Mailer::newInstance($transport);
@@ -132,5 +137,32 @@ class ClientController implements ControllerProviderInterface
             }
         }
         return $this->app['twig']->render('reset-password.twig');
+    }
+
+    public function clientResetAction(Request $request)
+    {
+        $data = $this->app['user.repository']->findByToken($request->get('token'));
+
+        if($data != null){
+            if($request->getMethod() == 'POST'){
+                $data->setPassword($request->get('password'));
+
+                $this->app['orm.em']->flush();
+
+                $this->app['session']->getFlashBag()->add('message_success','Password telah berhasil diganti');
+
+                return $this->app->redirect($this->app['url_generator']->generate('login'));
+            }
+        }else{
+            return 'token tidak valid';
+        }
+
+        return $this->app['twig']->render('new-password.twig');
+
+    }
+
+    public function homeClientAction()
+    {
+        return 'ini home client';
     }
 }

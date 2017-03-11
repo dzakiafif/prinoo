@@ -35,4 +35,14 @@ class DoctrineUserRepository extends EntityRepository implements UserRepositoryI
         return $this->findOneBy(['email'=>$email]);
         // TODO: Implement findByEmail() method.
     }
+
+    /**
+     * @param $token
+     * @return User
+     */
+    public function findByToken($token)
+    {
+        return $this->findOneBy(['token'=>$token]);
+        // TODO: Implement findByToken() method.
+    }
 }

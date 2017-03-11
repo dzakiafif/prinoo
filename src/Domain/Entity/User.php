@@ -74,6 +74,12 @@ class User
     private $token;
 
     /**
+     * @Column(type="integer",nullable=false)
+     * @var
+     */
+    private $status;
+
+    /**
      * @Column(type="datetime",name="created_at",nullable=false)
      * @var \DateTime
      */
@@ -97,6 +103,7 @@ class User
         $user->setAlamat($alamat);
         $user->setPassword($password);
         $user->setToken(sha1($email));
+        $user->setStatus(0);
         $user->setCreatedAt(new \DateTime());
         $user->setUpdatedAt(new \DateTime());
 
@@ -255,6 +262,22 @@ class User
     public function setToken($token)
     {
         $this->token = $token;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getStatus()
+    {
+        return $this->status;
+    }
+
+    /**
+     * @param mixed $status
+     */
+    public function setStatus($status)
+    {
+        $this->status = $status;
     }
 
     /**

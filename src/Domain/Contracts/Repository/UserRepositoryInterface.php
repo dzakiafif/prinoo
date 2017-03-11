@@ -24,4 +24,10 @@ interface UserRepositoryInterface
      */
     public function findByEmail($email);
 
+    /**
+     * @param $token
+     * @return User
+     */
+    public function findByToken($token);
+
 }
