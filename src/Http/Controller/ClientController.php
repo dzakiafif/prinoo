@@ -9,6 +9,7 @@
 namespace Komal\prinoo\Http\Controller;
 
 
+use Komal\prinoo\Domain\Entity\Order;
 use Komal\prinoo\Domain\Entity\User;
 use Komal\prinoo\Domain\Services\UserPasswordMatcher;
 use Komal\prinoo\Http\Form\LoginForm;
@@ -52,6 +53,8 @@ class ClientController implements ControllerProviderInterface
 
         $controllers->get('/home',[$this,'homeClientAction'])->bind('home');
 
+        $controllers->match('/create-order',[$this,'createOrderAction']);
+
         return $controllers;
     }
 
@@ -80,24 +83,20 @@ class ClientController implements ControllerProviderInterface
             return $this->app['twig']->render('register.twig',['form'=>$formBuilder->createView()]);
         }
         
-        $files = $registration->getUserProperty();
-        $fileName = md5(uniqid()). '.' . $files->guessExtension();
+//        $files = $registration->getUserProperty();
+//        $fileName = md5(uniqid()). '.' . $files->guessExtension();
 
-        $user = User::create($registration->getEmail(),$registration->getFirstName(),$registration->getLastName(),$registration->getNoHp(),$registration->getJenisKelamin(),$registration->getAlamat(),$registration->getPassword(),$fileName);
+        $user = User::create($registration->getEmail(),$registration->getFirstName(),$registration->getLastName(),$registration->getNoHp(),$registration->getJenisKelamin(),$registration->getAlamat(),$registration->getPassword());
 
         $this->app['orm.em']->persist($user);
         $this->app['orm.em']->flush();
 
-        $dirName = $this->app['foto.path'] . '/user/' . $user->getId();
-
-        if(is_dir($dirName) == false){
-            mkdir($dirName,0755);
-        }
-        $files->move($dirName, $fileName . '.' . $files->guessExtension());
-
-//        var_dump($user);
-//        exit;
-
+//        $dirName = $this->app['foto.path'] . '/user/' . $user->getId();
+//
+//       if(is_dir($dirName)== false){
+//           mkdir($dirName,0755);
+//       }
+//        $files->move($dirName, $fileName . '.' . $files->guessExtension());
 
         return 'OK';
 
@@ -231,6 +230,24 @@ class ClientController implements ControllerProviderInterface
             $jumlahBarang = $request->get('jumlah-barang');
             $kualitas = $request->get('kualitas');
             $orderProperty = $request->files->get('order-property');
+            $jumlahHarga = $request->get('jumlah-harga');
+
+            $filename = md5(uniqid()) . '.' . $orderProperty->guessExtension();
+
+            $data = Order::create($namaProduk,$userId,$jenisProduk,$bahan,$ukuranPanjang,$ukuranLebar,$jumlahBarang,$kualitas,$orderProperty,$jumlahHarga);
+
+            $this->app['orm.em']->persist($data);
+            $this->app['orm.em']->flush();
+
+            $dirName = $this->app['foto.path'] . '/order/' . $data->getId();
+
+            if(is_dir($dirName)== false){
+                mkdir($dirName,0755);
+            }
+
+            $orderProperty->move($dirName,$filename. '.' . $orderProperty->guessExtension());
+
+            return 'OK';
 
 
         }

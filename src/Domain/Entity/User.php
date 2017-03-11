@@ -86,7 +86,7 @@ class User
     private $status;
 
     /**
-     * @Column(type="string",length=255,nullable=false)
+     * @Column(type="string",length=255,nullable=true)
      * @var string
      */
     private $userProperty;
@@ -103,7 +103,7 @@ class User
      */
     private $updatedAt;
     
-    public static function create($email,$firstName,$lastName,$noHp,$jenisKelamin,$alamat,$password,$userProperty)
+    public static function create($email,$firstName,$lastName,$noHp,$jenisKelamin,$alamat,$password)
     {
 
         $user = new User();
@@ -115,7 +115,6 @@ class User
         $user->setJenisKelamin($jenisKelamin);
         $user->setAlamat($alamat);
         $user->setPassword($password);
-        $user->setUserProperty($userProperty);
         $user->setToken(sha1($email));
         $user->setStatus(0);
         $user->setCreatedAt(new \DateTime());
