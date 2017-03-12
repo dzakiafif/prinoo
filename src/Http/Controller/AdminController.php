@@ -42,35 +42,39 @@ class AdminController implements ControllerProviderInterface
 
         $controllers->get('/list-user',[$this,'listUserAction'])
             ->before([$this, 'userCredential'])
-            ->bind('list_user');
+            ->bind('list_user_admin');
 
         $controllers->get('/list-order',[$this,'listOrderAction'])
-            ->before([$this,'userCredintial'])
-            ->bind('list_order');
+            ->before([$this,'userCredential'])
+            ->bind('list_order_admin');
 
         $controllers->get('/list-barang',[$this,'listBarangAction'])
-            ->before([$this,'userCredintial'])
-            ->bind('list_barang');
+            ->before([$this,'userCredential'])
+            ->bind('list_barang_admin');
 
         $controllers->get('/delete-user/{id}',[$this,'deleteUserAction'])
             ->before([$this, 'userCredential'])
-            ->bind('delete_user');
+            ->bind('delete_user_admin');
 
         $controllers->match('/update-user/{id}',[$this,'editUserAction'])
             ->before([$this, 'userCredential'])
-            ->bind('update_user');
+            ->bind('update_user_admin');
 
         $controllers->match('/create-barang',[$this,'createBarangAction'])
             ->before([$this, 'userCredential'])
-            ->bind('create_barang');
+            ->bind('create_barang_admin');
 
         $controllers->get('/delete-barang/{id}',[$this,'deleteBarangAction'])
             ->before([$this, 'userCredential'])
-            ->bind('delete_barang');
+            ->bind('delete_barang_admin');
 
         $controllers->match('/update-barang/{id}',[$this,'editBarangAction'])
             ->before([$this, 'userCredential'])
-            ->bind('update_barang');
+            ->bind('update_barang_admin');
+
+        $controllers->match('/profile-user',[$this,'profileUserAdminAction'])
+            ->before([$this,'userCredential'])
+            ->bind('profile_user_admin');
 
         return $controllers;
     }
@@ -106,7 +110,7 @@ class AdminController implements ControllerProviderInterface
     {
         $barangInfo = $this->app['barang.repository']->findAll();
 
-        return $this->app['twig']->render('list-barang.twig',['data'=>$barangInfo]);
+        return $this->app['twig']->render('admin/list-barang.twig',['data'=>$barangInfo]);
     }
 
     public function deleteUserAction(Request $request)
@@ -223,5 +227,12 @@ class AdminController implements ControllerProviderInterface
 
             return $this->app->redirect('/list-barang');
         }
+    }
+
+    public function profileUserAdminAction()
+    {
+        $dataInfo = $this->app['user.repository']->findByEmail($this->app['session']->get('email')['value']);
+
+        return $this->app['twig']->render('admin/profile-user.twig',['data'=>$dataInfo]);
     }
 }

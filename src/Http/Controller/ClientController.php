@@ -76,7 +76,7 @@ class ClientController implements ControllerProviderInterface
         $controllers->get('/delete-order/{id}', [$this, 'deleteOrderAction'])
             ->bind('delete_order');
 
-        $controllers->get('/list-barang', [$this, 'listBarangAction'])
+        $controllers->get('/list-barang', [$this, 'listBarangClientAction'])
             ->bind('list_barang');
 
         $controllers->get('/createDummy', [$this, 'createDummyAction'])
@@ -133,7 +133,7 @@ class ClientController implements ControllerProviderInterface
         $this->app['orm.em']->persist($user);
         $this->app['orm.em']->flush();
 
-        return $this->app->redirect('/home');
+        return $this->app->redirect('/login');
 
     }
 
@@ -157,6 +157,9 @@ class ClientController implements ControllerProviderInterface
             if ($data != null) {
                 if ($pass == $data->getPassword()) {
                     $this->app['session']->set('email', ['value' => $email]);
+                    $this->app['session']->set('role',['value'=>$data->getRole()]);
+                    $this->app['session']->set('firstName',['value'=>$data->getFirstName()]);
+                    $this->app['session']->set('lastName',['value'=>$data->getLastName()]);
 
                     return $this->app->redirect('/home');
                 } else {
@@ -274,11 +277,11 @@ class ClientController implements ControllerProviderInterface
         return $this->app->redirect('/list-order');
     }
 
-    public function listBarangAction()
+    public function listBarangClientAction()
     {
         $dataInfo = $this->app['barang.repository']->findAll();
 
-        return $this->app['twig']->render('list-barang.twig', ['data' => $dataInfo]);
+        return $this->app['twig']->render('client/list-barang.twig', ['dataInfo' => $dataInfo]);
     }
 
     public function profileUserAction()

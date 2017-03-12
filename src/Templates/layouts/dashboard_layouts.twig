@@ -7,7 +7,7 @@
 		<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha.6/css/bootstrap.min.css">
 		<link href="https://fonts.googleapis.com/css?family=Fira+Sans:300,400,600,700|Lato:300,400,700|Pacifico|Kaushan+Script" rel="stylesheet">
 		<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
-		<link rel="stylesheet" type="text/css" href="assets/css/global.css">
+		<link rel="stylesheet" type="text/css" href="{{ app.asset_path }}/../assets/css/global.css">
 		
 	</head>
 	<body>
@@ -18,9 +18,41 @@
 						<p>Prinoo <small>beta</small></p>
 					</div>
 					<div class="left-nav">
-						<a href="{{ ('/home') }}" title="" class="item active">DASHBOARD</a>
-						<a href="#" title="" class="item">INPUT</a>
-						<a href="{{ ('/profile-user') }}" title="" class="item">PROFIL</a>
+						{% if ((app.session.get('role')['value']) == '0') %}
+							<a href="{{ ('/admin/home') }}" title="" class="item active">DASHBOARD</a>
+							<a href="#" title="" class="item">INPUT</a>
+							<a href="{{ ('/admin/profile-user') }}" title="" class="item">PROFIL</a>
+							<a href="#" title="" class="item">USER</a>
+							<a href="{{ ('/admin/list-barang') }}" title="" class="item">BARANG</a>
+						{% elseif ((app.session.get('role')['value']) == '1') %}
+							<a href="{{ ('/home') }}" title="" class="item active">DASHBOARD</a>
+							<a href="#" title="" class="item">INPUT</a>
+							<a href="{{ ('/profile-user') }}" title="" class="item">PROFIL</a>
+							<a href="#" title="" class="item">ORDER</a>
+						{% else %}
+							<a href="{{ ('/home') }}" title="" class="item active">DASHBOARD</a>
+							<a href="#" title="" class="item">INPUT</a>
+							<a href="{{ ('/profile-user') }}" title="" class="item">PROFIL</a>
+							<a href="{{ ('/list-barang') }}" title="" class="item">BARANG</a>
+						{% endif %}
+
+						{#{% if data.role == '0' %}#}
+							{#<a href="{{ ('/admin/home') }}" title="" class="item active">DASHBOARD</a>#}
+							{#<a href="#" title="" class="item">INPUT</a>#}
+							{#<a href="{{ ('/admin/profile-user') }}" title="" class="item">PROFIL</a>#}
+							{#<a href="#" title="" class="item">USER</a>#}
+							{#<a href="{{ ('/admin/list-barang') }}" title="" class="item">BARANG</a>#}
+						{#{% elseif data.role == '1' %}#}
+							{#<a href="{{ ('/home') }}" title="" class="item active">DASHBOARD</a>#}
+							{#<a href="#" title="" class="item">INPUT</a>#}
+							{#<a href="{{ ('/profile-user') }}" title="" class="item">PROFIL</a>#}
+							{#<a href="#" title="" class="item">ORDER</a>#}
+						{#{% else %}#}
+							{#<a href="{{ ('/home') }}" title="" class="item active">DASHBOARD</a>#}
+							{#<a href="#" title="" class="item">INPUT</a>#}
+							{#<a href="{{ ('/profile-user') }}" title="" class="item">PROFIL</a>#}
+							{#<a href="{{ ('/list-barang') }}" title="" class="item">BARANG</a>#}
+						{#{% endif %}#}
 					</div>
 				</div>
 				<div class="col-md-8 midnight">
@@ -31,14 +63,14 @@
 						<div class="dashboard__account-image">
 							<img src="{{ app.asset_path }}/assets/img/people/peop1.png" alt="" class="img-dashboard">
 						</div>
-						<p class="dashboard__account-name">{{ data.firstName }}{{ data.lastName }}</p>
+						<p class="dashboard__account-name">{{ app.session.get('firstName')['value'] }}&nbsp;{{ app.session.get('lastName')['value'] }}</p>
 						<p class="dashboard__account-role">
-							{% if data.role =='0' %}
-							admin
-							{% elseif data.role == '1' %}
-							vendor
+							{% if((app.session.get('role')['value'])=='0') %}
+								Admin
+							{% elseif ((app.session.get('role')['value'])=='1') %}
+								Vendor
 							{% else %}
-							Member
+								Member
 							{% endif %}
 						</p>
 					</div>

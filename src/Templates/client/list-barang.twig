@@ -1,0 +1,27 @@
+{% extends 'layouts/dashboard_layouts.twig' %}
+
+{% block dashboard_content %}
+    <table class="" cellspacing="0" width="100%">
+        <thead>
+            <tr>
+                <th>No.</th>
+                <th>Nama Barang</th>
+                <th>deskripsi</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% if dataInfo|length>0 %}
+                {% set i = 1 %}
+                {% for info in dataInfo %}
+                    <tr>
+                        <td>{{ i }}</td>
+                        <td>{{ info.namaBarang }}</td>
+                        <td>{{ info.description }}</td>
+                    </tr>
+                {% endfor %}
+                {% set i = i + 1 %}
+            {% else %}
+            {% endif %}
+        </tbody>
+    </table>
+{% endblock %}
