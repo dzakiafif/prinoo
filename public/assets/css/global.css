@@ -130,9 +130,7 @@ hr.sline {
 #content-4 {
 	width: 100%;
 	padding: 50px 0;
-	background-image: url('../img/content-4.svg');
-	background-repeat: no-repeat;
-	background-position: center center;
+	background: url('../img/content-4.svg') no-repeat center center;
 	background-size: cover;
 }
 
@@ -156,6 +154,22 @@ hr.sline {
 	width: 100%;
 }
 
+.carousel-title {
+	color: #ffffff;
+	margin-bottom: 15px;
+	text-transform: uppercase;
+	font-weight: 700;
+}
+
+.carousel-subtitle {
+	color: #fff;
+	margin-bottom: 25px;
+	line-height: 25px;
+	max-height: 100px;
+	max-width: 700px;
+	overflow: hidden;
+	word-wrap: break-word;
+}
 
 #content-5 .item {
 	padding:10px;
@@ -232,10 +246,9 @@ hr.sline {
 
 .img-btm {
 	z-index: 0;
-	position: absolute;
-	left: 50%;
-	-webkit-transform: translateX(-50%);
-    transform: translateX(-50%);
+	position: relative;
+	margin: 0 auto;
+	width: 50%;
 }
 
 .img-btm img {
