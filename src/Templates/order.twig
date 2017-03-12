@@ -1,52 +1,110 @@
 {% extends 'layouts/dashboard_layouts.twig' %}
 
 {% block dashboard_content %}
-	<div class="container text-center pt25">
-		<p class="form-title">Masukkan Pesanan</p>
-		<p>&nbsp;</p>
+    <div class="container text-center pt25">
+        <p class="form-title">Masukkan Pesanan</p>
+        <p>&nbsp;</p>
 
-		<div class="order-wrapper">
-			<form action="" method="get" accept-charset="utf-8">
-				<div class="form-group">
-					<label for="nama-produk">Nama Produk</label>
-					<input type="text" name="nama-produk[]" id="nama-produk" value="" class="form-control">
-				</div>
-				<div class="form-group">
-					<label for="jenis-produk">Jenis Produk</label>
-					<input type="text" name="jenis-produk[]" id="jenis-produk" value="" class="form-control">
-				</div>
-				<div class="form-group">
-					<label for="bahan">Bahan</label>
-					<input type="text" name="bahan[]" id="bahan" value="" class="form-control">
-				</div>
-				<div class="form-group">
-					<label for="ukuran-panjang">Ukuran Panjang</label>
-					<input type="text" name="ukuran-panjang[]" id="ukuran-panjang" value="" class="form-control">
-				</div>
-				<div class="form-group">
-					<label for="ukuran-lebar">Ukuran Lebar</label>
-					<input type="text" name="ukuran-lebar[]" id="ukuran-lebar" value="" class="form-control">
-				</div>
-				<div class="form-group">
-					<label for="jumlah-barang">Jumlah Barang</label>
-					<input type="text" name="jumlah-barang[]" id="jumlah-barang" value="" class="form-control">
-				</div>
-				<div class="form-group">
-					<label for="kualitas">Kualitas</label>
-					<input type="text" name="kualitas[]" id="kualitas" value="" class="form-control">
-				</div>
-				<div class="form-group">
-					<label for="order-property">Masukkan File</label>
-					<input type="file" name="order-property[]" id="order-property" value="" class="form-control">
-				</div>
-				<div class="form-group">
-					<label for="jumlah-harga">Jumlah Harga</label>
-					<input type="text" name="jumlah-harga[]" id="jumlah-harga" value="" class="form-control">
-				</div>
-				<div class="form-group">
-					<input type="submit" value="CREATE">
-				</div>
-			</form>
-		</div>
-	</div>
+        <div class="order-wrapper">
+            <form action="" method="post" accept-charset="utf-8" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="nama-produk">Nama Produk</label>
+                    <input type="text" name="nama-produk" id="nama-produk" value="" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="jenis-produk">Jenis Produk</label>
+                    <select class="form-control" id="jenis-produk" name="jenis-produk">
+                        {% for barang in data %}
+                            <option value="{{ barang.id }}">{{ barang.namaBarang }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="bahan">Bahan</label>
+                    <select name="bahan" id="bahan" class="form-control">
+                        <option value="0">Kertas</option>
+                        <option value="1">Karpet</option>
+                        <option value="2">Plastik</option>
+                        <option value="3">Karton</option>
+                    </select>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="ukuran-panjang">Ukuran Panjang</label>
+                            <input type="text" name="ukuran-panjang" id="ukuran-panjang" value=""
+                                   class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="ukuran-lebar">Ukuran Lebar</label>
+                            <input type="text" name="ukuran-lebar" id="ukuran-lebar" value="" class="form-control">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="jumlah-barang">Jumlah Barang</label>
+                    <input type="text" name="jumlah-barang" id="jumlah-barang" value="" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="kualitas">Kualitas</label>
+                    <select name="kualitas" id="kualitas" class="form-control">
+                        <option value="0">Low</option>
+                        <option value="1">Medium</option>
+                        <option value="2">High</option>
+                        <option value="3">Excellent</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="order-property">Masukkan File</label>
+                    <input type="file" name="order-property" id="order-property" value="" class="form-control">
+                </div>
+
+                <div class="form-group">
+                    <label for="jumlah-harga">Jumlah Harga</label>
+                    <input type="text" name="jumlah-harga" id="jumlah-harga" value="" class="form-control" readonly>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Submit" class="btn btn-red btn-block">
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascript %}
+    <script>
+        $(document).ready(function() {
+            var total = 0;
+            var bahan = 0;
+            var luas = 0;
+            var kualitas = 0;
+            var jumlah = 0;
+
+            $('#kualitas, #bahan, #jumlah-barang, #ukuran-lebar, #ukuran-panjang').change(function() {
+                var panjang = parseInt($('#ukuran-panjang').val());
+                var lebar = parseInt($('#ukuran-lebar').val());
+                luas = panjang * lebar;
+                var hargaLuas = (luas/10000) * 35000;
+
+                bahan = parseFloat($('#bahan').val()/2) + 0.1;
+
+                jumlah = parseInt($('#jumlah-barang').val());
+
+                kualitas = parseFloat($('#kualitas').val()) + 0.1;
+
+                total = hargaLuas * bahan * jumlah * kualitas;
+
+                $('#jumlah-harga').val(total);
+            });
+
+        });
+
+        function doTheMath()
+        {
+
+        }
+    </script>
 {% endblock %}

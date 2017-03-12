@@ -152,35 +152,30 @@ class AdminController implements ControllerProviderInterface
         }
     }
 
-    public function createBarangAction(Request $request){
-        $barang = new BarangForm();
-        $formBuilder = $this->app['form.factory']->create($barang,$barang);
+    public function createBarangAction(Request $request)
+    {
 
-        if($request->getMethod() == 'GET'){
-            return $this->app['twig']->render('barang.twig',['form'=>$formBuilder->createView()]);
+
+        if ($request->getMethod() === 'POST') {
+            $namaBarang = $request->get('nama-barang');
+            $description = $request->get('description');
+            $barangProperty = $request->files->get('barang-property');
+            $barangChar = json_encode($request->get('barang-char'));
+
+            $filename = md5(uniqid()) . '.' . $barangProperty->guessExtension();
+
+
+            $data = Barang::create($namaBarang, $description, $filename,$barangChar);
+            $this->app['orm.em']->persist($data);
+            $this->app['orm.em']->flush();
+
+            $dirName = $this->app['foto.path'] . '/barang/' . $data->getId();
+            $barangProperty->move($dirName, $filename);
+
+            return 'OK';
         }
 
-        $formBuilder->handleRequest($request);
-
-        if(!$formBuilder->isValid()){
-            return $this->app['twig']->render('barang.twig',['form'=>$formBuilder->createView()]);
-        }
-        $files = $barang->getBarangProperty();
-        $fileName = md5(uniqid()). '.' . $files->guessExtension();
-
-        $data = Barang::create($barang->getNamaBarang(),$barang->getDescription(),$fileName);
-        $this->app['orm.em']->persist($data);
-        $this->app['orm.em']->flush();
-
-        $dirName = $this->app['foto.path'] . '/barang/' . $data->getId();
-
-
-        if(is_dir($dirName) == false){
-            mkdir($dirName,0755);
-        }
-        $files->move($dirName, $fileName . '.' . $files->guessExtension());
-
-        return $this->app->redirect('/list-barang');
+        return $this->app['twig']->render('barang.twig');
     }
 
     public function deleteBarangAction(Request $request)

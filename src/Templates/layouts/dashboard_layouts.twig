@@ -12,7 +12,7 @@
 	</head>
 	<body>
 		<div class="container-fluid dashboard">
-			<div class="row">
+			<div class="row h100vh">
 				<div class="col-md-2 asphalt p0">
 					<div class="dashboard__brand">
 						<p>Prinoo <small>beta</small></p>
@@ -26,33 +26,14 @@
 							<a href="{{ ('/admin/list-barang') }}" title="" class="item">BARANG</a>
 						{% elseif ((app.session.get('role')['value']) == '1') %}
 							<a href="{{ ('/home') }}" title="" class="item active">DASHBOARD</a>
-							<a href="#" title="" class="item">INPUT</a>
 							<a href="{{ ('/profile-user') }}" title="" class="item">PROFIL</a>
 							<a href="#" title="" class="item">ORDER</a>
 						{% else %}
 							<a href="{{ ('/home') }}" title="" class="item active">DASHBOARD</a>
-							<a href="#" title="" class="item">INPUT</a>
+							<a href="{{ path('create_order') }}" title="" class="item">ORDER</a>
 							<a href="{{ ('/profile-user') }}" title="" class="item">PROFIL</a>
-							<a href="{{ ('/list-barang') }}" title="" class="item">BARANG</a>
-						{% endif %}
 
-						{#{% if data.role == '0' %}#}
-							{#<a href="{{ ('/admin/home') }}" title="" class="item active">DASHBOARD</a>#}
-							{#<a href="#" title="" class="item">INPUT</a>#}
-							{#<a href="{{ ('/admin/profile-user') }}" title="" class="item">PROFIL</a>#}
-							{#<a href="#" title="" class="item">USER</a>#}
-							{#<a href="{{ ('/admin/list-barang') }}" title="" class="item">BARANG</a>#}
-						{#{% elseif data.role == '1' %}#}
-							{#<a href="{{ ('/home') }}" title="" class="item active">DASHBOARD</a>#}
-							{#<a href="#" title="" class="item">INPUT</a>#}
-							{#<a href="{{ ('/profile-user') }}" title="" class="item">PROFIL</a>#}
-							{#<a href="#" title="" class="item">ORDER</a>#}
-						{#{% else %}#}
-							{#<a href="{{ ('/home') }}" title="" class="item active">DASHBOARD</a>#}
-							{#<a href="#" title="" class="item">INPUT</a>#}
-							{#<a href="{{ ('/profile-user') }}" title="" class="item">PROFIL</a>#}
-							{#<a href="{{ ('/list-barang') }}" title="" class="item">BARANG</a>#}
-						{#{% endif %}#}
+						{% endif %}
 					</div>
 				</div>
 				<div class="col-md-8 midnight">
@@ -81,5 +62,8 @@
 		
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"></script>
+
+	{% block javascript %}
+	{% endblock %}
 	</body>
 </html>

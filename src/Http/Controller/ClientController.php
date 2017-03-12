@@ -244,12 +244,18 @@ class ClientController implements ControllerProviderInterface
             $kualitas = $request->get('kualitas');
             $orderProperty = $request->files->get('order-property');
             $jumlahHarga = $request->get('jumlah-harga');
+            $user = $this->app['user.repository']->findByEmail($this->app['session']->get('email')['value']);
+            $namaBarang = $this->app['barang.repository']->findById($request->get('jenis-produk'));
 
             $filename = md5(uniqid()) . '.' . $orderProperty->guessExtension();
 
-            $data = Order::create($namaProduk, $this->app['session']->findByEmail($request->get('email')['value']), $this->app['barang.repository']->findById($request->get('barang')), $bahan, $ukuranPanjang, $ukuranLebar, $jumlahBarang, $kualitas, $orderProperty, $jumlahHarga);
+            $data = Order::create($namaProduk, $user, $namaBarang, $bahan, $ukuranPanjang, $ukuranLebar, $jumlahBarang, $kualitas, $filename, $jumlahHarga);
 
             $dirName = $this->app['foto.path'] . '/order/' . $data->getId();
+
+            if (!is_dir($this->app['foto.path']. '/order')) {
+                mkdir($this->app['foto.path']. '/order');
+            }
 
             if (is_dir($dirName) == false) {
                 mkdir($dirName, 0755);
@@ -260,10 +266,14 @@ class ClientController implements ControllerProviderInterface
             $this->app['orm.em']->persist($data);
             $this->app['orm.em']->flush();
 
+            return 'OK';
+
             return $this->app->redirect('/list-order');
         }
 
-        return $this->app['twig']->render('order.twig');
+        $dataBarang = $this->app['barang.repository']->findAll();
+
+        return $this->app['twig']->render('order.twig', ['data' => $dataBarang]);
 
     }
 

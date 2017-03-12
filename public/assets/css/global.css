@@ -398,9 +398,10 @@ hr.sline {
     display: none; 
 }
 
-.dashboard [class^="col-"]{
-	height: 100vh;
+.dashboard .h100vh{
+	min-height: 100vh;
 }
+
 
 .dashboard .col-md-8 {
 	overflow-y: auto;

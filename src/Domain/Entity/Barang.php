@@ -46,6 +46,12 @@ class Barang
     private $barangProperty;
 
     /**
+     * @Column(type="text", name="barang_char", length=65535, nullable=false)
+     * @var string
+     */
+    private $barangChar;
+
+    /**
      * @Column(type="integer",name="is_top",nullable=true)
      * @var int
      */
@@ -58,12 +64,12 @@ class Barang
     private $createdAt;
 
     /**
-     * @Column(type="datetime",name="updated_at",nullable=false)
+     * @Column(type="datetime",name="updated_at",nullable=true)
      * @var \DateTime
      */
     private $updatedAt;
 
-    public static function create($namaBarang,$description,$barangProperty)
+    public static function create($namaBarang,$description,$barangProperty, $barangChar)
     {
 
 //        $barangProperty = md5(uniqid()) . '.' .$file->guessExtension();
@@ -72,12 +78,29 @@ class Barang
         $barang->setNamaBarang($namaBarang);
         $barang->setDescription($description);
         $barang->setBarangProperty($barangProperty);
+        $barang->setBarangChar($barangChar);
         $barang->setIsTop(0);
         $barang->setCreatedAt(new \DateTime());
         $barang->setUpdatedAt(new \DateTime());
 
         return $barang;
 
+    }
+
+    /**
+     * @return string
+     */
+    public function getBarangChar()
+    {
+        return $this->barangChar;
+    }
+
+    /**
+     * @param string $barangChar
+     */
+    public function setBarangChar($barangChar)
+    {
+        $this->barangChar = $barangChar;
     }
 
     /**
