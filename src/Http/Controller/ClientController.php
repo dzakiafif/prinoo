@@ -90,7 +90,7 @@ class ClientController implements ControllerProviderInterface
         $email = $this->app['session']->get('email')['value'];
 
         if ($email == null) {
-            $this->app->redirect($this->app['url_generator']->generate('login'));
+            return $this->app->redirect($this->app['url_generator']->generate('login'));
         }
 
         return null;
