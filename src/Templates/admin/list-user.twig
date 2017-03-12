@@ -1,0 +1,48 @@
+{% extends 'layouts/dashboard_layouts.twig' %}
+
+{% block dashboard_content %}
+    <div class="container text-center pt25">
+        <p class="form-title">List User</p>
+        <p>&nbsp;</p>
+
+        <div class="tabel-wrapper">
+            <table class="table table-layout" cellspacing="0">
+                <thead>
+                <tr>
+                    <th>No</th>
+                    <th>Nama Depan</th>
+                    <th>Nama Belakang</th>
+                    <th>Email</th>
+                    <th>Jenis Kelamin</th>
+                    <th>Alamat</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% if data|length > 0 %}
+                    {% set i = 1 %}
+                    {% for dat in data %}
+                        <tr>
+                            <td>{{ i }}</td>
+                            <td>{{ dat.firstName }}</td>
+                            <td>{{ dat.LastName }}</td>
+                            <td>{{ dat.email }}</td>
+                            <td>
+                            {% if dat.jenisKelamin == '0' %}
+                            Laki-laki
+                            {% else %}
+                            Perempuan
+                            {% endif %}
+                            </td>
+                            <td>{{ dat.alamat }}</td>
+                        </tr>
+                        {% set i = i + 1 %}
+                    {% endfor %}
+                {% else %}
+                    Tidak Ada Data
+                {% endif %}
+                </tbody>
+
+            </table>
+        </div>
+    </div>
+{% endblock %}

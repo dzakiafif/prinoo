@@ -523,6 +523,12 @@ hr.sline {
 	text-align: left;
 }
 
+.tabel-wrapper {
+	width: 100%;
+	margin: 0 auto;
+	text-align: left;
+}
+
 .order-wrapper label {
 	margin-left: 15px;
 }

@@ -103,7 +103,7 @@ class AdminController implements ControllerProviderInterface
     {
         $dataUser = $this->app['user.repository']->findAll();
 
-        return $this->app['twig']->render('list-user.twig',['data'=>$dataUser]);
+        return $this->app['twig']->render('admin/list-user.twig',['data'=>$dataUser]);
     }
 
     public function listBarangAction()

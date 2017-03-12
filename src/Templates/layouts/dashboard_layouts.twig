@@ -22,7 +22,7 @@
 							<a href="{{ ('/admin/home') }}" title="" class="item active">DASHBOARD</a>
 							<a href="#" title="" class="item">INPUT</a>
 							<a href="{{ ('/admin/profile-user') }}" title="" class="item">PROFIL</a>
-							<a href="#" title="" class="item">USER</a>
+							<a href="{{ ('/admin/list-user') }}" title="" class="item">USER</a>
 							<a href="{{ ('/admin/list-barang') }}" title="" class="item">BARANG</a>
 						{% elseif ((app.session.get('role')['value']) == '1') %}
 							<a href="{{ ('/home') }}" title="" class="item active">DASHBOARD</a>
