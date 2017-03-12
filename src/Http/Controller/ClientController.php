@@ -63,6 +63,10 @@ class ClientController implements ControllerProviderInterface
             ->before([$this, 'identityCheck'])
             ->bind('home');
 
+        $controllers->get('/profile-user',[$this,'profileUserAction'])
+            ->before([$this,'identityCheck'])
+            ->bind('profile_user');
+
         $controllers->match('/create-order', [$this, 'createOrderAction'])
             ->bind('create_order');
 
@@ -277,6 +281,13 @@ class ClientController implements ControllerProviderInterface
         return $this->app['twig']->render('list-barang.twig', ['data' => $dataInfo]);
     }
 
+    public function profileUserAction()
+    {
+        $dataInfo = $this->app['user.repository']->findByEmail($this->app['session']->get('email')['value']);
+
+        return $this->app['twig']->render('profile-user.twig',['data'=>$dataInfo]);
+    }
+
     public function logoutAction()
     {
         $this->app['session']->clear();
@@ -286,6 +297,8 @@ class ClientController implements ControllerProviderInterface
 
     public function homeClientAction()
     {
-        return $this->app['twig']->render('dashboard.twig');
+        $dataInfo = $this->app['user.repository']->findByEmail($this->app['session']->get('email')['value']);
+
+        return $this->app['twig']->render('dashboard.twig',['data'=>$dataInfo]);
     }
 }

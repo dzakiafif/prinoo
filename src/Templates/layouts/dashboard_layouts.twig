@@ -18,9 +18,9 @@
 						<p>Prinoo <small>beta</small></p>
 					</div>
 					<div class="left-nav">
-						<a href="#" title="" class="item active">DASHBOARD</a>
+						<a href="{{ ('/home') }}" title="" class="item active">DASHBOARD</a>
 						<a href="#" title="" class="item">INPUT</a>
-						<a href="#" title="" class="item">PROFIL</a>
+						<a href="{{ ('/profile-user') }}" title="" class="item">PROFIL</a>
 					</div>
 				</div>
 				<div class="col-md-8 midnight">
@@ -31,10 +31,18 @@
 						<div class="dashboard__account-image">
 							<img src="{{ app.asset_path }}/assets/img/people/peop1.png" alt="" class="img-dashboard">
 						</div>
-						<p class="dashboard__account-name">Dzaki Afif</p>
-						<p class="dashboard__account-role">Admin</p>
+						<p class="dashboard__account-name">{{ data.firstName }}{{ data.lastName }}</p>
+						<p class="dashboard__account-role">
+							{% if data.role =='0' %}
+							admin
+							{% elseif data.role == '1' %}
+							vendor
+							{% else %}
+							Member
+							{% endif %}
+						</p>
 					</div>
-					<a href="#" title="" class="btn btn-red btn-block btn-bottom">Logout</a>
+					<a href="{{ ('/logout') }}" title="" class="btn btn-red btn-block btn-bottom">Logout</a>
 				</div>
 			</div>
 		</div>
